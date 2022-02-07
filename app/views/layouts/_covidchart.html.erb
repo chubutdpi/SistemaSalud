@@ -1,0 +1,112 @@
+<div class="container mb-2">
+    <hr>
+    <h2>Datos Covid-19</h2>
+    <h4 class="mb">Estado de situación Coronavirus - Ministerio de Salud de Chubut</h4>
+     <h4 class="mb-4">Corte de información 15 hs. <%=@corte_informacion%></h4>
+    <div class="row">
+        <div class="col-md-5">
+            <canvas id="myChart" width="380" height="380"></canvas>
+        </div>
+        <div class="col-md-7">
+            <canvas id="myChart2" width="380" height="380"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    const DATA_COUNT = 7;
+    const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
+
+    var ctx, myChart;
+    var ctx2, myChart2;
+    
+    if ($('.welcome.index').length > 0) {
+      // Gráfico 1. Localidades con más casos nuevos.
+      ctx = document.getElementById('myChart').getContext('2d');
+      myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: <%= raw @g1_labels %>,
+          datasets: [
+            {
+              label: 'Casos Activos',
+              data: <%= @g1_values %>,
+              backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+              borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      // Gráfico 2. Curva epidemiológica 
+      ctx2 = document.getElementById('myChart2').getContext('2d');
+      myChart = new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: <%= raw @curva_tags %> ,
+          datasets: [
+            {
+              label: 'Casos Nuevos',
+              data: <%= @curva_valores_nc%>,
+              borderColor: 'blue',
+              backgroundColor: 'rgba(255, 0, 0, 0)',
+              borderWidth: 1,
+              stack: 'combined',
+              
+            },
+            {
+              label: 'Recuperados Nuevos',
+              data: <%= @curva_valores_nr%>,
+              borderColor: 'green',
+              backgroundColor: 'rgba(0, 255, 0, 0)',
+              borderWidth: 1,
+              stack: 'combined',
+              
+            },
+            {
+              label: 'Fallecidos Nuevos',
+              data: <%= @curva_valores_nd%>,
+              borderColor: 'red',
+              backgroundColor: 'rgba(0, 0, 255, 0)',
+              borderWidth: 1,
+              
+            },
+            {
+              label: 'Curva Activos',
+              data: <%= @curva%>,
+              borderColor: 'rgba(253, 126, 20, 1)',
+              backgroundColor: 'rgb(253, 126, 20, 0.25)',
+              borderWidth: 1,
+              
+            }
+
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              stacked: true
+            }
+          }
+        }
+      });      
+    }
+
+
+
+  });
+</script>

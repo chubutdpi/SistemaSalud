@@ -1,0 +1,29 @@
+<div class="container">
+  <h2 class="pt-2">Datos covid por Localidad</h2>
+
+  <table class="responsive nowrap table table-hover table-bordered" id="dttb-covid_situations" data-sort="true" data-source="<%= url_for(format: :json)%>">
+    <thead>
+      <tr>
+        <th rowspan="2" data-data="locality">Localidad</th>
+        <th rowspan="2" data-data="part_date">Fecha</th>
+        <th colspan="3" style="color:green;">Casos Nuevos</th>
+        <th colspan="3" style="color:darkblue;">Casos Acumulados</th>
+        <th rowspan="2" data-data="url" data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px">Opciones</th>
+      </tr>
+      <tr>
+        <th data-data="new_cases" style="color:green;">Confirmados</th>
+        <th data-data="new_recovered" style="color:green;">Recuperados</th>
+        <th data-data="new_deceased" style="color:green;">Fallecidos</th>
+        <th data-data="acumulated_new" style="color:darkblue;">Confirmados</th>
+        <th data-data="acumulated_recovered" style="color:darkblue;">Recuperados</th>
+        <th data-data="acumulated_deceased" style="color:darkblue;">Fallecidos</th>
+      </tr>
+    </thead>
+
+  </table>
+
+  <br>
+
+  <%= link_to 'Nueva Situación', new_covid_situation_path, class: "btn btn-primary" %>
+
+  </div>

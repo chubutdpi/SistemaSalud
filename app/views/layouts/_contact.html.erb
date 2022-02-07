@@ -1,0 +1,58 @@
+<section class="bg-gray pb-5 pt-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<h2 class="h3 section-title">Contacto</h2>
+				<p class="margin-40">
+					<strong>Dirección:</strong> Mariano Moreno 555 - Rawson - Provincia del Chubut		<br>
+					<strong>Código postal:</strong> U9103<br>
+					<strong>Teléfono:</strong> (54-0280) 4484-062<br>
+					<!--strong>Correo electrónico:</strong> <a href="mailto:mesadeentradas@msal.gov.ar">mesadeentradas@msal.gov.ar</a><br-->
+				</p>
+				<h4>Nuestras Redes Sociales</h4>
+				<div class="social-share">
+					<ul class="list-group list-group-horizontal">
+						<li class="list-group-item list-group-item-social" style="padding-left: 0rem;">
+							<a href="https://www.facebook.com/MinSaludChubut" target="_blank" type="button" class="btn btn-social btn-facebook btn-icon"><%= fa_icon "facebook" %></a>
+						</li>
+						<li class="list-group-item list-group-item-social">
+							<a href="https://www.instagram.com/saludchubut/" target="_blank" type="button" class="btn btn-social btn-instagram btn-icon"><%= fa_icon "instagram" %></a>
+						</li>
+						<li class="list-group-item list-group-item-social">
+							<a href="https://twitter.com/saludchubut" target="_blank" type="button" class="btn btn-social btn-primary btn-icon"><%= fa_icon "twitter" %></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="panel-pane pane-texto">
+					<div class="pane-content">
+					 	 <div id="map"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script type="text/javascript">
+	var map = L.map('map').setView([-43.29894,-65.10403], 24);
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoiY2h1YnV0ZHBpIiwiYSI6ImNreXlnZmFjYjAwcnIycHJ6YWM4dnd2bjgifQ.nyQ2r3Z_Cc9XCSJ5Jd2CRg'
+	}).addTo(map);
+
+	var polygon = L.polygon([
+    [-43.29871,-65.10405],
+    [-43.29891,-65.10432],
+    [-43.29885,-65.10440],
+    [-43.29893,-65.10449],
+    [-43.29914,-65.10418],
+    [-43.29888,-65.10383]
+	]).addTo(map);
+</script>

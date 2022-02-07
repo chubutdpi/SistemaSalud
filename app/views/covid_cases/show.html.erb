@@ -1,0 +1,36 @@
+<section id="felicitaciones" class="felicitaciones-section py-5">
+  <div class="container">
+    <div class="panel-pane pane-texto">
+      <div class="pane-content">
+        <div class="">
+          <div class="row my-2">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-left">
+                  <h3 class="text-center">¡FELICITACIONES <%= @covid_case.firstname.upcase %>  !</h3>
+                  <p>Su solicitud de alta COVID19 ha sido registrada correctamente. Tenemos toda la información necesaria para contactarnos en caso de ser necesario.</p>
+
+                  <p>El sistema generó un código de seguridad que junto a su dni son únicos y mantendrán su información segura, por eso es recomendable que lo anote y no lo pierda para poder consultar su estado en cualquier momentos .</a></p>
+
+                  <p>Para consultar su estado de alta covid ingrese al siguien enlace: <strong><a style="color:#3b8caf;text-decoration: underline;" target="_blank" href="/consultar_estado">enlace</a></strong> usando la siguiente información:</p>
+
+                  <p>
+                    <strong>DNI: </strong><%=@covid_case.dni %><br>
+                    <strong>Código: </strong><%=@covid_case.security_code %>
+                  </p>
+
+                  <p>También puede imprimir esta página y acceder desde su celular escaneando el código QR que se muestra a continuación.</p>
+
+                  <a class="btn btn-primary btn-block mt-3" href="/">IMPRIMIR</a>
+
+                  <a class="btn btn-secondary btn-block mt-3" href="/">VOLVER AL INICIO</a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

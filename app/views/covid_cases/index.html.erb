@@ -1,0 +1,23 @@
+<div class="container">
+<h2 class="pt-2">Casos Covid</h2>
+
+<table class="responsive nowrap table table-hover" id="dttb-covid_cases" data-sort="true" data-source="<%= url_for(format: :json)%>">
+  <thead>
+    <tr>
+      <th data-data="dni">Dni</th>
+      <th data-data="firstname">Nombres</th>
+      <th data-data="lastname">Apellidos</th>
+      <th data-data="email">Email</th>
+      <th data-data="updated_at">Actualizado</th>
+      <th data-data="state">Estado</th>
+      <th data-data="url" data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px">Opciones</th>
+    </tr>
+  </thead>
+
+</table>
+
+<br>
+
+<%= link_to 'Alta Caso Covid', new_covid_case_path, class:'btn btn-primary' %>
+
+</div>

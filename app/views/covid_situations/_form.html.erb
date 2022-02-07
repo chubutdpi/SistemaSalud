@@ -1,0 +1,206 @@
+<%= form_with(model: covid_situation, local: true) do |form| %>
+  <% if covid_situation.errors.any? %>
+    <script type="text/javascript">
+      window.onload = function() {
+        toastr['error']('Uno o más campos tienen errores, corrígelos y vuelve a intentarlo');
+        <% covid_situation.errors.messages.each do |key_p, message| %>
+
+          <% key = key_p.to_s.delete_prefix(':') %>
+          <% if CovidSituation.columns_hash[key].nil? %>
+            <% key = key+"_id" %>
+          <% end %>
+          var element = document.getElementById("covid_situation_<%= key%>");
+          element.classList.add("is-invalid");
+          if ("<%= message[0] %>" != ""){
+            var span = document.createElement('span');
+            span.className = "invalid-feedback";
+            span.append("<%= message[0] %>");
+            element.parentElement.append(span);
+          }
+        <% end %>
+      }
+    </script>
+  <% end %>
+  <div class="row">
+    <div class="col-md-4 form-group">
+      <%= form.label :locality_id, "Localidad" %>
+      <%= form.collection_select :locality_id, current_user.localities, :id, :to_s, {prompt: "Seleccionar localidad"}, {class: "select2 select-field form-control"} %>
+
+    </div>
+
+    <div class="form-group col-md-4">
+      <%= form.label :part_date %>
+      <%= form.text_field :part_date, hide_label:true, :class => "datepicker form-control"%>
+    </div>
+
+    
+    <div class="col-md-12 title-form">
+      <hr>
+      <p class="form-title"><strong>Casos Nuevos</strong></p>
+    </div>
+
+    <div class="col-md-4 form-group">
+      <%= form.label :new_cases %>
+      <%= form.number_field :new_cases, class: "numeric-only active-field" %>
+      <p class="font-italic font-weight-bold">Acumulado: <span id="new_cases_acumulated">0</span></p>
+    </div>
+
+    <div class="col-md-4 form-group">
+      <%= form.label :new_recovered %>
+      <%= form.number_field :new_recovered, class: "numeric-only active-field" %>
+      <p class="font-italic font-weight-bold">Acumulado: <span id="new_recovered_acumulated">0</span></p>
+    </div>
+
+    <div class="col-md-4 form-group">
+      <%= form.label :new_deceased %>
+      <%= form.number_field :new_deceased, class: "numeric-only active-field" %>
+      <p class="font-italic font-weight-bold">Acumulado: <span id="new_deceased_acumulated">0</span></p>
+    </div>
+
+    <div class="col-md-12 title-form">
+      <p class="form-title"><strong>Actualización de Activos</strong></p>
+    </div>
+
+
+    <div class="col-md-3 form-group">
+      <%= form.label :ambulatory %>
+      <%= form.number_field :ambulatory, class: "numeric-only active-field" %>
+    </div>
+
+    <div class="col-md-3 form-group">
+      <%= form.label :general_room %>
+      <%= form.number_field :general_room, class: "numeric-only active-field" %>
+    </div>
+
+    <div class="col-md-3 form-group">
+      <%= form.label :uti_without_arm %>
+      <%= form.number_field :uti_without_arm, class: "numeric-only active-field" %>
+    </div>
+    
+    <div class="col-md-3 form-group">
+      <%= form.label :uti_with_arm %>
+      <%= form.number_field :uti_with_arm, class: "numeric-only active-field" %>
+    </div>
+
+    <div class="col-md-12">
+      <span id="autocomplete-activo" href="#" class="btn btn-secondary">Autocompletar</span>
+      <span id="clean-activo" href="#" class="btn btn-secondary">Limpiar</span>
+    </div>
+    
+    <div class="col-md-12 actions">
+      <hr>
+      <%= form.submit :class => "btn btn-success" %>
+      <a class="btn btn-secondary" href="/">Volver al inicio</a>
+    </div>
+  </div>
+<% end %>
+
+
+<script type="text/javascript">
+
+  
+  $('.numeric-only').ForceNumericOnly();
+  $('#autocomplete-activo').click(function() {
+    if (!$('#covid_situation_new_cases').val())
+      $('#covid_situation_new_cases').val(0);
+    if (!$('#covid_situation_new_recovered').val())
+      $('#covid_situation_new_recovered').val(0);
+    if (!$('#covid_situation_new_deceased').val())
+      $('#covid_situation_new_deceased').val(0);
+    if (!$('#covid_situation_ambulatory').val())
+      $('#covid_situation_ambulatory').val(0);
+    if (!$('#covid_situation_general_room').val())
+      $('#covid_situation_general_room').val(0);
+    if (!$('#covid_situation_uti_with_arm').val())
+      $('#covid_situation_uti_with_arm').val(0);
+    if (!$('#covid_situation_uti_without_arm').val())
+      $('#covid_situation_uti_without_arm').val(0);
+    update_acumulated_to_all_type_cases();
+  });
+
+  $('#clean-activo').click(function() {
+    $('.active-field').val("");
+    update_acumulated_to_all_type_cases();
+  });
+
+
+  function update_acumulated (case_type, value) {
+    locality_id = $("#covid_situation_locality_id").val();
+    part_date = $("#covid_situation_part_date").val();
+    if (locality_id != '' && part_date != '') {
+      console.log("Actualizar acumulado de " + case_type);
+      $.ajax({
+        url: "/get_acumulated/"+locality_id+"/"+part_date+"/"+case_type+"/"+value,
+        type: 'POST'
+      }).done(function(data) {
+        console.log (data)
+        switch(data.case_type) {
+          case "new_cases":
+            $("#new_cases_acumulated").text(data.value);
+            break;
+          case "new_recovered":
+            $("#new_recovered_acumulated").text(data.value);
+            break;
+          case "new_deceased":
+            $("#new_deceased_acumulated").text(data.value);
+            break;
+          default:
+            console.log("Default");
+        } 
+      });
+    }
+  }
+
+  function update_acumulated_to_all_type_cases () {
+    new_cases_value = $("#covid_situation_new_cases").val()
+    if (new_cases_value != '')
+      update_acumulated ("new_cases", $("#covid_situation_new_cases").val());
+    else
+      update_acumulated ("new_cases", 0);
+
+
+    new_recovered_value = $("#covid_situation_new_recovered").val()
+    if (new_recovered_value != '')
+      update_acumulated ("new_recovered", $("#covid_situation_new_recovered").val());
+    else
+      update_acumulated ("new_recovered", 0);
+    
+    new_deceased_value = $("#covid_situation_new_deceased").val()
+    if (new_deceased_value != '')
+      update_acumulated ("new_deceased", $("#covid_situation_new_deceased").val());
+    else
+      update_acumulated ("new_deceased", 0);
+
+
+  }
+
+  $(document).ready(function(){
+    if (($('.covid_situations.new').length + $('.covid_situations.create').length ) > 0) {
+      $("#covid_situation_locality_id").on("change", function() {
+        console.log ("Cambio la Localidad a " + this.value);
+        update_acumulated_to_all_type_cases ();
+      });
+
+      $("#covid_situation_part_date").on('change', function() {
+        console.log ("Cambio la fecha a " + this.value);
+        update_acumulated_to_all_type_cases ();
+      });
+
+      $("#covid_situation_new_cases").keyup(function() {
+        if (event.key >= 0 && event.key <= 9)
+          update_acumulated ("new_cases", this.value);
+      });
+
+      $("#covid_situation_new_recovered").keyup(function() {
+        if (event.key >= 0 && event.key <= 9)
+          update_acumulated ("new_recovered", this.value);
+      });
+
+      $("#covid_situation_new_deceased").keyup(function() {
+        if (event.key >= 0 && event.key <= 9)
+          update_acumulated ("new_deceased", this.value);
+      });
+    }
+  });  
+
+</script>

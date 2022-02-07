@@ -1,0 +1,203 @@
+<%= form_with(model: covid_case, local: true) do |form| %>
+  <% if covid_case.errors.any? %>
+
+      <script type="text/javascript">
+        window.onload = function() {
+          toastr['error']('Uno o más campos tienen errores, corrígelos y vuelve a intentarlo');
+          <% covid_case.errors.messages.each do |key_p, message| %>
+
+            <% key = key_p.to_s.delete_prefix(':') %>
+            <% if CovidCase.columns_hash[key].nil? %>
+              <% key = key+"_id" %>
+            <% end %>
+            var element = document.getElementById("covid_case_<%= key%>");
+            element.classList.add("is-invalid");
+            if ("<%= message[0] %>" != ""){
+              var span = document.createElement('span');
+              span.className = "invalid-feedback";
+              span.append("<%= message[0] %>");
+              element.parentElement.append(span);
+            }
+          <% end %>
+        }
+      </script>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-danger" role="alert">
+        <p class="text-justify">
+          Los datos ingresados en el presente formulario revisten carácter de Declaración Jurada. Cualquier omisión o falsedad provocará el rechazo de la inscripción 
+          y la consecuente exclusión del registro, sin perjuicio de las sanciones legales que pudieran corresponder.El alta debe ser solicitada cuando se cumplan los 
+          días pautados por el equipo de salud, y NO días antes. La respuesta puede tardar 24hs en llegar aproximadamente. 
+        </p>
+      </div> 
+    </div>
+
+    <div class="col-md-12 title-form">
+      <hr>
+      <div class="alert alert-warning" role="alert">
+        Los campos marcados con un "<span style="color:red;">*</span>" son de carácter obligatorio para poder inscribirse.
+      </div>
+      <p class="form-title"><strong>1- Datos personales</strong></p>
+    </div>
+
+    <div class="form-group col-md-12">
+      <%= form.label :dni, "Número de documento  <span style='color:red;'>*</span>".html_safe %>
+      <%= form.text_field :dni, :class => "form-control", :placeholder=>"12345678"%>
+    </div>
+
+    <div class="form-group col-md-12">
+      <%= form.label :firstname, "Nombre completo <span style='color:red;'>*</span>".html_safe %>
+      <%= form.text_field :firstname, :class => "form-control", :placeholder => "José Luis"  %>
+    </div>
+
+    <div class="form-group col-md-12">
+      <%= form.label :lastname, "Apellido/s  <span style='color:red;'>*</span>".html_safe %>
+      <%= form.text_field :lastname, :class => "form-control", :placeholder => "Gonzalez"  %>
+    </div>
+
+    <div class="col-md-12 title-form">
+      <hr>
+      <p class="form-title"><strong>2- Datos de contacto</strong></p>
+      <div class="alert alert-warning" role="alert">
+        Asegúrese de ingresar los datos de contacto de forma correcta. De otro modo el personal a cargo de gestionar el certificado de alta, no podrá contactarse con usted.
+      </div>
+    </div>
+
+    <div class="col-md-6 form-group">
+       <%= form.label :cellphone, "Nro de Celular sin el 0 y sin el 15" %>
+       <%= form.text_field :cellphone, :placeholder=>"2804123456", :class => "form-control" %>
+    </div>
+    <div class="col-md-6 form-group">
+      <%= form.label :email, "Correo Electrónico  <span style='color:red;'>*</span>".html_safe %>
+      <%= form.email_field :email, :placeholder=> "contacto@chubut.gov.ar", :class => "form-control" , autocomplete: "email" %>
+    </div>
+
+    <div class="col-md-12 title-form">
+      <hr>
+      <p class="form-title"><strong>3- Datos de su domicilio</strong></p>
+    </div>
+    
+    <div class="col-md-12 form-group">
+      <%= form.label :locality_id, "Localidad  <span style='color:red;'>*</span>".html_safe %>
+      <%= form.collection_select :locality_id, Locality.where(enabled:true), :id, :to_s, {prompt: "Seleccionar localidad"}, {class: "select2 select-field form-control"} %>
+    </div>
+
+    <div class="col-md-6 form-group">
+      <%= form.label :address_street, "Calle  <span style='color:red;'>*</span>".html_safe %>
+      <%= form.text_field :address_street, :placeholder=> "Fontana", :class => "form-control" %>
+    </div>
+
+    <div class="col-md-2 col-sm-4 col-xs-4 form-group">
+      <%= form.label :address_number, "Nº  <span style='color:red;'>*</span>".html_safe %>
+      <%= form.text_field :address_number, :placeholder=> "50", :class => "form-control" %>
+    </div>
+
+    <div class="col-md-2 col-sm-4 col-xs-4 form-group">
+      <%= form.label :address_floor, "Piso" %>
+      <%= form.text_field :address_floor, :placeholder=> "3", data: { toggle: 'tooltip', placement: 'top', original_title: 'Coloque 0 en caso de vivir en planta baja' }, :class => "form-control" %>
+    </div>
+
+    <div class="col-md-2 col-sm-4 col-xs-4 form-group">
+      <%= form.label :address_department, "Dpto" %>
+      <%= form.text_field :address_department, :placeholder=> "C", :class => "form-control" %>
+    </div>
+
+    <%= form.hidden_field :state%>
+    <div class="col-md-12 title-form">
+      <hr>
+      <p class="form-title"><strong>4- Datos sobre la solicitud de alta</strong></p>
+    </div>
+    
+    <div class="col-md-12">
+      <div class="alert alert-warning" role="alert">
+        Ingrese la fecha en que usted sintió su 1er síntoma o si no ha tenido síntomas, y presenta un test positivo, ingrese la fecha de la prueba diagnóstica (PCR). En caso de ser contacto estrecho, ingrese la última fecha en la que estuvo en contacto.
+      </div>
+    </div>
+  
+    
+      <div class="col-md-6 form-group">
+        <%= form.label :reason, "Motivo de la solicitud de alta <span style='color:red;'>*</span>".html_safe %>
+        <%= form.select :reason, ["Caso Confirmado de COVID19", "Contacto Estrecho de caso confirmado de COVID19"], {prompt: "Seleccionar Motivo"}, {class: "select2 form-control"} %>
+      </div>
+    
+      <div class="col-md-12 form-group" id="institution">
+        <%= form.label :institution, "Indique el nombre del Establecimiento, Laboratorio o Institución donde se realizó el hisopado <span style='color:red;'>*</span>".html_safe %>
+        <%= form.text_field :institution, :placeholder=>"Hospital Santa Teresita", :class => "form-control" %>
+      </div>
+
+      <div class="form-group col-md-6">
+        <%= form.label :initial_date, "Fecha" %>
+        <%= form.text_field :initial_date, hide_label:true, :class => "datepicker form-control"%>
+      </div>
+
+      <div class="form-group col-md-6 contac-estrecho">
+        <%= form.label :c_firstname, "Nombres del contacto <span style='color:red;'>*</span>".html_safe %>
+        <%= form.text_field :c_firstname, :class => "form-control", :placeholder => "José Luis"  %>
+      </div>
+
+      <div class="form-group col-md-6 contac-estrecho">
+        <%= form.label :c_lastname, "Apellidos del contacto <span style='color:red;'>*</span>".html_safe %>
+        <%= form.text_field :c_lastname, :class => "form-control", :placeholder => "Gonzalez"  %>
+      </div>
+
+      <div class="form-group col-md-6 contac-estrecho">
+        <%= form.label :c_dni, "Número de documento del contacto".html_safe %>
+        <%= form.text_field :c_dni, :class => "form-control", :placeholder=>"12345678"%>
+      </div>
+
+      <div class="form-group col-md-6 contac-estrecho">
+        <%= form.label :c_cellphone, "Nro de Celular sin el 0 y sin el 15 del contacto" %>
+        <%= form.text_field :c_cellphone, :placeholder=>"2804123456", :class => "form-control" %>
+      </div>
+
+      <div class="col-md-6 form-group contac-estrecho">
+        <p style="margin-bottom: 0rem;">Indique si convive con el Caso Positivo</p>
+        <%= form.check_box :c_is_cohabiting, :id => "is_cohabiting" %>
+        <%= form.label :c_is_cohabiting, "Soy conviviente" %>
+      </div>
+        
+      <div class="form-group col-md-6 contac-estrecho" id="cohabiting_symptom_date" style="display: none;">
+        <%= form.label :c_cohabiting_symptom_date, "Fecha de inicio de síntomas del conviviente <span style='color:red;'>*</span>".html_safe %>
+        <%= form.text_field :c_cohabiting_symptom_date, hide_label:true, :class => "datepicker form-control"%>
+      </div>
+
+      <div class="col-md-12 form-group">
+        <%= form.label :c_symptom, "Indique si durante el cumplimiento del aislamiento presentó algunos de estos síntomas <span style='color:red;'>*</span>".html_safe %>
+        <%= form.select :c_symptom, ["Rinorrea (mocos)", "Dolor de garganta", "Tos", "Fiebre (37,5º o más)", "Dolor de cabeza", "Diarrea", "Vómitos", "Dolores musculares", "Falta de aire", "Pérdida del gusto", "Pérdida del olfato", "Otros"], {prompt: "Sin síntomas"}, {class: "select2 form-control"} %>
+      </div>
+
+      <div class="col-md-12 title-form">
+        <hr>
+        <p class="form-title"><strong>5- Esquema de vacunación</strong></p>
+      </div>
+
+      <div class="col-md-6 form-group">
+        <%= form.label :vaccination_scheme_id, "Cuál es su estado de vacunación contra COVID19 <span style='color:red;'>*</span>".html_safe %>
+        <%= form.collection_select :vaccination_scheme_id, VaccinationScheme.all, :id, :to_s, {prompt: "Seleccionar esquema"}, {class: "select2 select-field form-control"} %>
+      </div>
+
+      <div class="form-group col-md-6" id="last_dose_date">
+        <%= form.label :last_dose_date, "Fecha de última dosis aplicada <span style='color:red;'>*</span>".html_safe %>
+        <%= form.text_field :last_dose_date, hide_label:true, :class => "datepicker form-control"%>
+      </div>
+
+      <div class="col-md-12 title-form">
+        <hr>
+        <p><strong>6- Verifica que no eres un robot</strong></p>
+      </div>
+
+      <div class="col-md-12 form-group">
+        <%= recaptcha_tags :id => "covid_case_recaptcha_id" %>
+      </div>
+        
+      <div class="col-md-12">
+        <div class="actions">
+          <%= form.submit(:class => "btn btn-primary")%>
+          <a class="btn btn-secondary" href="/">Volver al inicio</a>
+        </div>  
+
+      </div>
+  </div>
+<% end %>

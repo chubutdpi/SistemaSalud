@@ -1,0 +1,46 @@
+<section id="felicitaciones" class="felicitaciones-section py-5">
+  <div class="container">
+    <div class="panel-pane pane-texto">
+      <div class="pane-content">
+        <div class="">
+          <div class="row my-2">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="row justify-content-center">
+                <div class="col-md-12 text-left">
+                  <strong>Nombre:</strong>
+                  <%= @locality.name %>
+                </div>
+
+                <div class="col-md-12 text-left">
+                  <strong>Codigo Postal:</strong>
+                  <%= @locality.postal_code  %>
+                </div>
+
+                <div class="col-md-12 text-left">
+                  <strong>Area:</strong>
+                  <%= @locality.area %>
+                </div>
+
+                <div class="col-md-12 text-left">
+                  <strong>¿Habilitada?:</strong>
+                  <%= @locality.enabled  %>
+                </div>
+
+                <div class="actions col-md-12 text-left"> 
+                    <%= link_to 'EDITAR LOCALIDADES', edit_locality_path(@locality), :class => "btn btn-primary btn-block" %>
+                    <%= link_to 'VER LOCALIDADES', localities_path, :class => "btn btn-secondary btn-block" %>
+                    <a class="btn btn-secondary btn-block mt-3" href="/">VOLVER AL INICIO</a>
+                </div>
+            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+

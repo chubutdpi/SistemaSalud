@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html class="h-100">
+  <head>
+    <title>MS Chubut</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" media="all">
+    <%= favicon_link_tag asset_path('favicon.ico') %>
+  </head>
+
+  <body id="page-top" class="<%= controller_name %> <%= action_name %> bg-covid d-flex flex-column h-100">
+    <% unless flash.empty? %>
+      <script type="text/javascript">
+        <% flash.each do |f| %>
+          <% type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info') %>
+          toastr['<%= type %>']('<%= f[1] %>');
+        <% end %>
+      </script>
+    <% end %>
+      <%= render "layouts/navbar"%>
+      <main class="flex-shrink-0">
+        <%= yield %>
+      </main>  
+      <%= render "layouts/contact"%>
+      <%= render "layouts/footer"%>
+
+  </body>
+</html>

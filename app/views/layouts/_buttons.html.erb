@@ -1,0 +1,30 @@
+<div class="container buttons mb-2">
+  <!-- Three columns of text below the carousel -->
+  <div class="row text-center bg-gray p-4 justify-content-center">
+
+    <div class="col-sm-6 col-md-2">
+      <a href="/covid_current" type="button" class="btn btn-home btn-primary btn-rounded btn-icon bg-azul-chubut">
+        <%= fa_icon "bar-chart" %></a><br>
+      <span class="btn-home-text">Parte Diario Covid</span>
+    </div><!-- /.col-md-2 -->
+    <div class="col-sm-6 col-md-2">
+      <a href="/notices" type="button" class="btn btn-home btn-primary btn-rounded btn-icon bg-azul-chubut"><%= fa_icon "newspaper-o" %></a><br>
+      <span class="btn-home-text">Portal de Noticias</span>
+    </div><!-- /.col-md-4 -->
+    <% if MSConfig::COVIDCASE %>
+    <div class="col-sm-6 col-md-2">
+      <a href="/covid_cases/new" type="button" class="btn btn-home btn-primary btn-rounded btn-icon bg-azul-chubut"><%= fa_icon "file-text-o" %></a><br>
+      <span class="btn-home-text">Formulario de Alta Covid</span>
+    </div><!-- /.col-md-2 -->
+    <% end %>
+    <div class="col-sm-6 col-md-2">
+      <a href="https://www.argentina.gob.ar/coronavirus/vacuna/aplicadas" target="_blank" type="button" class="btn btn-home btn-primary btn-rounded btn-icon bg-azul-chubut"><%= fa_icon "line-chart" %></a><br>
+      <span class="btn-home-text">Monitor Vacunación</span>
+    </div><!-- /.col-md-4 -->
+
+    <div class="col-sm-6 col-md-2">
+      <a href="https://www.argentina.gob.ar/coronavirus/informes-diarios/reportes" type="button" target="_blank" class="btn btn-home btn-primary btn-rounded btn-icon bg-azul-chubut"><%= fa_icon "flag" %></a><br>
+      <span class="btn-home-text">Situación Nacional</span>
+    </div><!-- /.col-md-2 -->
+  </div><!-- /.row -->
+</div>

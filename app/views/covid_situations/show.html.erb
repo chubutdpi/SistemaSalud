@@ -1,0 +1,67 @@
+<section id="felicitaciones" class="felicitaciones-section py-5">
+  <div class="container">
+    <div class="panel-pane pane-texto">
+      <div class="pane-content">
+        <div class="">
+          <div class="row my-2">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="row justify-content-center">
+                <div class="col-md-12 text-left">
+                  <strong>Locality:</strong>
+                  <%= @covid_situation.locality %>
+                </div>
+
+                <div class="col-md-12 text-left">
+                  <strong>Fecha del Parte:</strong>
+                  <%= @covid_situation.part_date %>
+                </div>
+
+                <div class="col-md-12 text-left">
+                  <strong>Nuevos Casos:</strong>
+                  <%= @covid_situation.new_cases %>
+                </div>
+
+                <div class="col-md-12 text-left">
+                  <strong>Nuevos Acumulado:</strong>
+                  <%= @covid_situation.acumulated_new %>
+                </div>
+
+                <div class="col-md-12 text-left">
+                  <strong>Nuevos Recuperados:</strong>
+                  <%= @covid_situation.new_recovered %>
+                </div>
+
+                <div class="col-md-12 text-left">
+                  <strong>Ambulatory:</strong>
+                  <%= @covid_situation.ambulatory %>
+                </div>
+
+                <div class="col-md-12 text-left">
+                  <strong>General room:</strong>
+                  <%= @covid_situation.general_room %>
+                </div>
+
+                <div class="col-md-12 text-left">
+                  <strong>Uti with arm:</strong>
+                  <%= @covid_situation.uti_with_arm %>
+                </div>
+
+                <div class="col-md-12 text-left">
+                  <strong>Uti without arm:</strong>
+                  <%= @covid_situation.uti_without_arm %>
+                </div>
+
+                
+
+                <%= link_to 'Edit', edit_covid_situation_path(@covid_situation) %> |
+                <%= link_to 'Back', covid_situations_path %>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

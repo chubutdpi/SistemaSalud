@@ -1,0 +1,68 @@
+<div class="container my-5">
+  <h2 class="my-5">Situación Epidemiológica de COVID-19 Provincia del Chubut</h2>
+  <div class="mb-3">
+    <strong class="text-right"><h3>Reporte Diario</h3></strong>
+  </div>
+  <h3 class="text-right mb-4">Rawson, <%= I18n.l Date.today, format: :date_extend %></h3>
+  
+  <h3>SITUACIÓN EPIDEMIOLÓGICA PROVINCIAL - Corte de información 15 hs. <%= @corte_informacion %></h3>
+  <br>
+
+  <table class="table">
+    <thead class="thead-light text-center">
+      <th>CASOS CONFIRMADOS CHUBUT</th>
+      <th>CASOS RECUPERADOS CHUBUT</th>
+      <th>CASOS FALLECIDOS CHUBUT</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Reportados Nuevos</td>
+        <td>Reportados Nuevos</td>
+        <td>Reportados Nuevos</td>
+      </tr>
+      <tr>
+        <td><%= @cases_new_reported || 0 %></td>
+        <td><%= @cases_new_recovered_reported || 0 %></td>
+        <td><%= @cases_new_deceased_reported || 0 %></td>
+      </tr>
+      <tr>
+        <td>Acumulados</td>
+        <td>Acumulados</td>
+        <td>Acumulados</td>
+      </tr>
+      <tr>
+        <td><%= @cases_confirm_acumulated || 0 %></td>
+        <td><%= @cases_recovered_acumulated || 0 %></td>
+        <td><%= @cases_deceased_acumulated || 0 %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="my-5">SITUACIÓN EPIDEMIOLÓGICA POR LOCALIDAD - Corte de información 15 hs. <%= @corte_informacion %></h3>
+
+  <div class="col-md-4 form-group">
+    <%= label_tag "Localidad:" %>
+    <%= select_tag "select_locality_list", options_from_collection_for_select(Locality.where(enabled:true), :id, :to_s), prompt: "Seleccionar localidad", :class=> 'select2 select-field form-control' %>
+  </div>
+
+  <table id="part_locality" class="responsive nowrap table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th rowspan="3">Nuevos</th>
+        <th colspan="4">COVID19 Activos</th>
+        <th rowspan="3">Recuperados</th>
+        <th rowspan="3">Fallecidos</th>
+        <th rowspan="3">Total de Casos</th>
+      </tr>
+      <tr>
+        <th rowspan="2">Ambulatorios</th>
+        <th rowspan="2">Clínica General</th>
+        <th colspan="2">Internados en UTI</th>
+        <tr>
+          <th>Sin ARM</th>
+          <th>Con ARM</th>
+        </tr>
+      </tr>
+    </thead>
+  </table>
+</div>

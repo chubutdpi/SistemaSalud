@@ -1,0 +1,21 @@
+<div class="container">
+<col class="row">
+	<h2 class="col-12 pt-2">Localidades</h2>
+</col>
+
+<table class="responsive nowrap table table-hover" id="dttb-localities" data-sort="true" data-source="<%= url_for(format: :json)%>">
+  <thead>
+    <tr>
+      <th data-data="name">Nombre</th>
+      <th data-data="postal_code">Codigo Postal</th>
+      <th data-data="area">Area</th>
+      <th data-data="enabled">¿Habilitada?</th>
+      <th data-data="url" data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px">Opciones</th>
+    </tr>
+  </thead>
+
+</table>
+
+<br>
+<%= link_to 'Nueva Localidad', new_locality_path, class: "btn btn-primary", class:'btn btn-primary' %>
+</div>

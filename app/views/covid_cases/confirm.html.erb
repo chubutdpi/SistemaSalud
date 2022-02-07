@@ -1,0 +1,22 @@
+<div class="offset-md-3 col-md-6">
+    <div>
+        <h2 class="text-center my-5"> Certificado Alta Covid </h2>
+        <p class="text-justify">
+            El proceso de alta covid para <%= @covid_case.lastname %> <%= @covid_case.firstname %> finalizó con éxito. 
+            Ya puede descargar el certificado en formato PDF 
+        </p>
+    </div>
+    <div class="col-md-6">
+        <%= link_to 'Volver', covid_cases_path, class: "btn btn-primary" %>
+        
+        <% if @covid_case.reason == 'Contacto Estrecho de caso confirmado de COVID19' %>
+            <%= link_to 'PDF', pdf_contact_covid_case_path(@covid_case, format: :pdf), class: "btn btn-secondary btn-inline-block", target: :_blank %>
+        <% end %>
+        <% if @covid_case.reason == 'Caso Confirmado de COVID19' %>
+            <%= link_to 'PDF', pdf_confirm_covid_case_path(@covid_case, format: :pdf), class: "btn btn-secondary btn-inline-block", target: :_blank %>
+        <% end %>
+        <% if @covid_case.reason == 'Caso sospechoso de COVID19 y descartado por resultado negativo de laboratorio.' %>
+            <%= link_to 'PDF', pdf_suspicious_covid_case_path(@covid_case, format: :pdf), class: "btn btn-secondary btn-inline-block", target: :_blank %>
+        <% end %>
+    </div>
+</div>

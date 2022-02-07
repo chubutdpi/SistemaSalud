@@ -1,0 +1,38 @@
+<style>
+    body {
+        width: 80%;
+        margin-left: 10%;
+        font-size: 12pt;   /* the same is true for font sizes, prefer pt */
+        font-family: Calibri;
+        text-rendering: geometricPrecision;
+    }
+    .title {
+        text-align: right;
+        margin-top: 5rem;
+    }
+    .note {
+        margin: 3rem 0;
+        text-align: justify;
+    }
+    .footer {
+        margin: 15rem 0;
+        text-align: right;
+    }
+</style>
+<div class="offset-md-3 col-md-6">
+    <div id="header">
+      <%= image_tag 'https://i.ibb.co/BVCD1H1/logo-ministerio-chubut.png' %>
+    </div>
+    <h3 class="title"><%= @covid_case.locality.area %> - <%= Time.zone.now.strftime("%d/%m/%Y") %></h3>
+    <div class="note">
+        <p>
+            Constancia de finalización de la indicación de aislamiento social obligatorio.
+        </p>
+        <p>Se deja constancia que <%= @covid_case.firstname %> <%= @covid_case.lastname %> (DNI <%= @covid_case.dni %>), que reside en la localidad de
+            <%= @covid_case.locality %>, finaliza el período de aislamiento preventivo obligatorio por haber sido contacto estrecho de un caso confirmado
+             de COVID19 en la fecha <%= Time.zone.now.strftime("%d/%m/%Y") %>, a partir del cual puede retomar sus actividades habituales acorde a las
+              normas establecidas en el contexto de Pandemia de COVID19.- 
+        </p>
+    </div>
+    <h4 class="footer">Ministerio de Salud de la Provincia del Chubut</h4>
+</div>

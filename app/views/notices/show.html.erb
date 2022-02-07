@@ -1,0 +1,47 @@
+<section id="felicitaciones" class="felicitaciones-section py-5">
+  <div class="container">
+    <div class="panel-pane pane-texto">
+      <div class="pane-content">
+        <div class="">
+          <div class="row my-2">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="row justify-content-center">
+               <%if @notice.image.attached?%>
+                  <div class="col-md-4 text-left">
+                      <%=image_tag(url_for(@notice.image),:class => "notice-image img-fluid mx-auto",:style => "width: 500px; min-height: 400px; height:400px; object-fit:none; object-position:center;")%>
+                  </div>
+                  <div class="col-md-8 text-left">
+                <%else%>
+                  <div class="col-md-12 text-left">
+                <%end%>  
+             	    <div class="lead font-weight-bold font-italic text-muted"><%= @notice.tipo %> </div>
+                  <div class="lead font-weight-bold font-italic"><%= @notice.fecha.strftime('%d/%m/%Y')%></div>
+                  <h2> <%= @notice.titulo %>.</h2>
+                  <h3 class="notice-heading text-muted font-italic"><%= @notice.subtitulo %></h3>
+                  <hr>
+                  <%= @notice.cuerpo %>
+  				      </div>
+              </div>                
+              <div class="row">
+                <% if can? :update, @notice %>
+                <div class="col-md-4">
+                  <%= link_to 'EDITAR NOTICIA', edit_notice_path(@notice), class:"btn btn-primary btn-block mt-3" %> 
+                </div>
+                <div class="col-md-4">
+					        <%= link_to 'VOLVER A NOTICIAS', notices_path, class:"btn btn-secondary btn-block mt-3" %>
+			      	  </div>
+                <%end%>
+				        <div class="col-md-4">
+					        <a class="btn btn-secondary btn-block mt-3" href="/">VOLVER AL INICIO</a>
+				        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+

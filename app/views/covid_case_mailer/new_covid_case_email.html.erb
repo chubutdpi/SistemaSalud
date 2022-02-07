@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>You got a new order from <%= @covid_case.firstname %>!</p>
+    <p>
+    Order details<br>
+    --------------------------
+    </p>
+    <p>Name: <%= @covid_case.lastname %></p>
+    <p>Email: <%= @covid_case.email %></p>
+    <p>Phone: <%= @covid_case.locality %></p>
+    <p>
+    Message:<br>
+    ----------
+    </p>
+    <p><%= @covid_case.dni %></p>
+  </body>
+</html>

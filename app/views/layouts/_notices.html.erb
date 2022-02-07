@@ -1,0 +1,70 @@
+ <!-- START THE FEATURETTES -->
+
+<div class="container notices mb-2">
+  
+  
+  <% if (!Notice.count.zero?) && (Notice.count >= 3) %>
+
+    <div class="top-section col-12">
+      <hr>
+      <h2>Noticias</h2>  
+      
+      <div class="row featured-4 mb-5">
+        <div class="col-md-7 pe-md-5">
+          <div class="card card-full text-light overflow zoom">
+            <div class="height-ratio image-wrapper">
+            
+            <%=image_tag(url_for(@notices[0].image),:class => "notice-image img-fluid mx-auto", :style => "width: 720px; min-height: 550px; object-fit:cover; object-position:center;", :sizes => "(max-width: 720px) 100vw, 720px")%>
+            </div>
+            <div class="position-absolute p-3 b-0 w-100 bg-lg-shadow">
+              <!-- post title -->
+              <h2 class="h3 h2-sm h1-md display-4-lg fw-bold heading-letter-spacing text-white"><%=link_to @notices[0].titulo, @notices[0], :class=> "text-white"%></h2>
+              <!-- date -->
+              <div class="news-meta mb-2">
+                <span class="white fw-bold"><%@notices[0].fecha%></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <!-- Trending Top -->
+          <div class="row">
+            <div class="col-lg-12 col-md-6 col-sm-6 mb-3">
+              <div class="card card-full text-light overflow zoom">
+                <div class="height-ratio image-wrapper">
+                
+                <%=image_tag(url_for(@notices[1].image),:class => "notice-image img-fluid mx-auto", :style => "width: 510px; min-height: 200px; object-fit:cover; object-position:center;", :sizes => "(max-width: 510px) 100vw, 510px")%>
+                </div>
+                <div class="position-absolute p-3 b-0 w-100 bg-lg-shadow">
+                  <!-- post title -->
+                  <h2 class="h3 h2-sm h1-md display-4-lg fw-bold heading-letter-spacing text-white"><%=link_to @notices[1].titulo, @notices[1], :class=> "text-white"%></h2>
+                  <!-- date -->
+                  <div class="news-meta mb-2">
+                    <span class="white fw-bold"><%@notices[1].fecha%></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-6 col-sm-6">
+              <div class="card card-full text-light overflow zoom">
+                <div class="height-ratio image-wrapper">
+                
+                <%=image_tag(url_for(@notices[2].image),:class => "notice-image img-fluid mx-auto", :style => "width: 510px; min-height: 200px; object-fit:cover; object-position:center;", :sizes => "(max-width: 510px) 100vw, 510px")%>
+                </div>
+                <div class="position-absolute p-3 b-0 w-100 bg-lg-shadow">
+                  <!-- post title -->
+                  <h2 class="h3 h2-sm h1-md display-4-lg fw-bold heading-letter-spacing text-white"><%=link_to @notices[2].titulo, @notices[2], :class=> "text-white"%></h2>
+                  <!-- date -->
+                  <div class="news-meta mb-2">
+                    <span class="white fw-bold"><%@notices[2].fecha%></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %> 
+</div>
+<!-- /END THE FEATURETTES -->
