@@ -56,6 +56,7 @@ group :development do
   gem 'capistrano-rails', '1.4.0'
   gem 'capistrano3-puma', '3.1.1'
   gem 'capistrano-bundler'
+  gem 'sshkit-sudo'#cap staging puma: error en nginx_config
 end
 
 group :test do

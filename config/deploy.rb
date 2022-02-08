@@ -1,14 +1,33 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.11.0"
 
-set :application, "my_app_name"
-set :repo_url, "git@example.com:me/my_repo.git"
+set :application, "sistemaSalud"
+set :repo_url, "git@github.com:chubutdpi/sistemaSalud.git"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads", "vendor/bundle",".bundle"
+append :linked_files, "config/database.yml", "config/master.key"
+set :user, 'deploy'
+set :rvm_type, :user
+set :rvm_ruby_version, '2.7.2'
+
+ # Necesita ejecutar el comando para crear estas 3 carpetas
+namespace :deploy do
+  namespace :check do
+    desc 'Create Directories for Pid, Log and Socket'
+    task :make_pid_log_and_socket_dirs do
+      on roles(:all) do
+        execute "mkdir -p #{shared_path}/tmp/sockets"
+        execute "mkdir -p #{shared_path}/tmp/pids"
+        execute "mkdir -p #{shared_path}/log"
+      end
+    end
+  end
+end
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-# set :deploy_to, "/var/www/my_app_name"
+# set :deploy_to, "/home/deploy/sitios/sistemaSalud"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh

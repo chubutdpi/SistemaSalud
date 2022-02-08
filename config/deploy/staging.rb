@@ -59,3 +59,11 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+server '34.238.42.101', user: 'deploy', roles: %w{app db web}
+  set :deploy_to, "/home/deploy/sitios/sistemaSalud/#{fetch(:rails_env)}"
+  set :branch, :master
+  set :stage, :staging
+  set :ssh_options, {
+    keys: %w(/home/deploy/.ssh/authorized_keys),
+    auth_methods: %w(publickey)
+  }
